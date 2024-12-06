@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace MiniProject6.Persistence.Models;
+namespace MiniProject7.Domain.Models;
 
 [Table("workflow")]
 public partial class Workflow
 {
     [Key]
     [Column("workflowid")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Workflowid { get; set; }
 
     [Column("workflowname")]

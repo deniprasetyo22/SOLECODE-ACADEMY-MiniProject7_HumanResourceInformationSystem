@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniProject6.Persistence.Models;
+using MiniProject7.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,13 @@ namespace MiniProject6.Application.Interfaces.IRepositories
 {
     public interface IWorkflowRepository
     {
-        Task<Leaverequest> SubmitLeaveRequestAsync(Leaverequest request);
-        Task ApproveOrRejectLeaveRequestAsync(int processId, Process Process);
+        //Task<Leaverequest> SubmitLeaveRequestAsync(Leaverequest request);
+        //Task ApprovalLeaveRequest(int processId, Process Process);
+
+        Task<IEnumerable<Workflow>> GetAllWorkflowsAsync();
+        Task<Workflow> GetWorkflowByIdAsync(int workflowId);
+        Task AddWorkflowAsync(Workflow workflow);
+        Task UpdateWorkflowAsync(Workflow workflow);
+        Task DeleteWorkflowAsync(int workflowId);
     }
 }

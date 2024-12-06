@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MiniProject5.Application.DTOs;
-using MiniProject5.Application.Interfaces.IServices;
-using MiniProject5.Persistence.Models;
+using MiniProject7.Application.DTOs;
+using MiniProject7.Application.Interfaces.IServices;
+using MiniProject7.Domain.Models;
 
-namespace MiniProject5.WebAPI.Controllers
+namespace MiniProject7.WebAPI.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -19,7 +19,7 @@ namespace MiniProject5.WebAPI.Controllers
             _worksOnService = worksOnService;
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, HR Manager, Department Manager, Employee Supervisor, Employee")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Workson>>> GetAllWorksOn([FromQuery] paginationDto pagination)
         {
@@ -27,7 +27,7 @@ namespace MiniProject5.WebAPI.Controllers
             return Ok(worksOnList);
         }
 
-        [Authorize(Roles = "Administrator, Employee")]
+        [Authorize(Roles = "Administrator, Employee, HR Manager, Employee Supervisor, Employee")]
         [HttpGet("{empId}/{projId}")]
         public async Task<ActionResult<Workson>> GetWorksOn(int empId, int projId)
         {
@@ -39,7 +39,7 @@ namespace MiniProject5.WebAPI.Controllers
             return Ok(worksOn);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Employee Supervisor")]
         [HttpPost]
         public async Task<ActionResult<Workson>> AddWorksOn(Workson worksOn)
         {
@@ -47,7 +47,7 @@ namespace MiniProject5.WebAPI.Controllers
             return Ok(newWorksOn);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Employee Supervisor")]
         [HttpPut("{empId}/{projId}")]
         public async Task<IActionResult> UpdateWorksOn(int empId, int projId, [FromBody] Workson worksOn)
         {
@@ -55,7 +55,7 @@ namespace MiniProject5.WebAPI.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Employee Supervisor")]
         [HttpDelete("{empId}/{projId}")]
         public async Task<IActionResult> DeleteWorksOn(int empId, int projId)
         {
@@ -63,11 +63,11 @@ namespace MiniProject5.WebAPI.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Administrator, Employee")]
+        [Authorize(Roles = "Administrator, Employee, Employee Supervisor")]
         [HttpGet("ownWorkson")]
         public async Task<IActionResult> GetOwnWorkson()
         {
-            var ownWorkson = await _worksOnService.GetOwnWorkson();
+            var ownWorkson = await _worksOnService.GetOwnWorksonAsync();
             return Ok(ownWorkson);
         }
     }

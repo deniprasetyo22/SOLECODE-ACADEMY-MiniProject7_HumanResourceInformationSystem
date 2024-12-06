@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniProject5.Application.DTOs
+namespace MiniProject7.Domain.Models
 {
     public class DateOnlyObject
     {
